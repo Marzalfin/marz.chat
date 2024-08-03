@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #registration, #chat {
+            margin: 20px;
+        }
+        #messages {
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+        }
+        #messages div {
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="registration">
+        <h2>Register</h2>
+        <input type="text" id="username" placeholder="Enter your username">
+        <button onclick="register()">Register</button>
+    </div>
+    <div id="chat" style="display: none;">
+        <h2>Chat Room</h2>
+        <div id="status">
+            <input type="text" id="statusInput" placeholder="What's on your mind?">
+            <button onclick="updateStatus()">Update Status</button>
+        </div>
+        <div id="messages"></div>
+        <input type="text" id="messageInput" placeholder="Type a message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <script>
+        let username = '';
+
+        function register() {
+            username = document.getElementById('username').value;
+            if (username) {
+                document.getElementById('registration').style.display = 'none';
+                document.getElementById('chat').style.display = 'block';
+            }
+        }
+
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+            if (message) {
+                const messagesDiv = document.getElementById('messages');
+                const msgDiv = document.createElement('div');
+                msgDiv.textContent = `${username}: ${message}`;
+                messagesDiv.appendChild(msgDiv);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                document.getElementById('messageInput').value = '';
+            }
+        }
+
+        function updateStatus() {
+            const status = document.getElementById('statusInput').value;
+            if (status) {
+                const statusDiv = document.getElementById('status');
+                const statusElement = document.createElement('div');
+                statusElement.textContent = `${username} updated status: ${status}`;
+                statusDiv.appendChild(statusElement);
+                document.getElementById('statusInput').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
